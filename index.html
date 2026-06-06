@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A.S. Vimal Raja — AI Full Stack Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    
+    
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green: #AAFF00;
+      --dark: #0d0d0d;
+      --mid: #1a1a1a;
+      --text: #e0e0e0;
+      color: #ffffff;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--green);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+      mix-blend-mode: difference;
+    }
+    
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 40px;
+    }
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    /* Radial light effect like Bruno Simon's */
+    .hero-light {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse at center top, rgba(40, 80, 30, 0.55) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Photo area */
+    
+    .hero-photo {
+      position: absolute;
+      top: -50px; left: 60%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 3;
+    }
+    .hero-photo img {
+  width: 100%;
+  height: 92%;
+  object-fit: contain;
+  object-position: bottom center;
+  mix-blend-mode: lighten;
+  filter: contrast(1.05) brightness(0.8) drop-shadow(0 0 60px rgba(100,200,50,0.25));
+}
+
+    /* Big name — sits behind photo */
+    .hero-name {
+      position: absolute;
+      top: 200px;
+      
+      left: 44px; right: 44px;
+      text-align: left;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-name h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(80px, 14vw, 180px);
+      line-height: 0.88;
+      color: var(--green);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    /* Tagline top-left */
+    .hero-tagline {
+      position: absolute;
+      top: 110px;
+      left: 44px;
+      z-index: 10;
+    }
+    .hero-tagline p {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .hero-tagline p span { color: var(--green); }
+
+    /* Year bottom-left */
+    .hero-year {
+      position: absolute;
+      bottom: 36px;
+      left: 44px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      z-index: 10;
+    }
+
+    /* Bio bottom-right */
+    .hero-bio {
+      position: absolute;
+      bottom: 80px;
+      right: 44px;
+      max-width: 260px;
+      z-index: 10;
+    }
+    .hero-bio p {
+      font-size: 12px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    /* Contact bottom-left above year */
+    .hero-contact {
+      position: absolute;
+      bottom: 80px;
+      left: 44px;
+      z-index: 10;
+    }
+    .hero-contact a {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      line-height: 2;
+      transition: color 0.2s;
+    }
+    .hero-contact a:hover { color: var(--green); }
+
+    /* SCROLL indicator right side */
+    .scroll-indicator {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .scroll-indicator span {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--green), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* Social links bottom-right above bio */
+    .hero-socials {
+      position: absolute;
+      bottom: 160px;
+      right: 44px;
+      display: flex;
+      gap: 20px;
+      z-index: 10;
+    }
+    .hero-socials a {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-socials a:hover { color: var(--green); }
+    .hero-socials a::before { content: '/ '; }
+
+    /* ABOUT SECTION */
+    section {
+      padding: 120px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 48px;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 6vw, 80px);
+      line-height: 0.95;
+      color: var(--text);
+    }
+    .about-heading em {
+      color: var(--green);
+      font-style: normal;
+    }
+    .about-body {
+      padding-top: 16px;
+    }
+    .about-body p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* SKILLS */
+    .skills-section { padding: 80px 80px 120px; max-width: 1400px; margin: 0 auto; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2px;
+      margin-top: 48px;
+    }
+    .skill-item {
+      border: 1px solid #1e1e1e;
+      padding: 28px 24px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .skill-item:hover {
+      border-color: var(--green);
+      background: rgba(170,255,0,0.03);
+    }
+    .skill-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .skill-type {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--green);
+      text-transform: uppercase;
+    }
+
+    /* WORK */
+    .work-section { padding: 80px 80px 120px; max-width: 1400px; margin: 0 auto; }
+    .work-list { margin-top: 48px; }
+    .work-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 40px;
+      padding: 28px 0;
+      border-bottom: 1px solid #1a1a1a;
+      transition: padding-left 0.3s;
+    }
+    .work-item:hover { padding-left: 16px; }
+    .work-item:hover .work-title { color: var(--green); }
+    .work-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .work-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 0.04em;
+      transition: color 0.3s;
+    }
+    .work-tags {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-align: right;
+      line-height: 2;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      padding: 120px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(60px, 10vw, 130px);
+      line-height: 0.9;
+      color: var(--text);
+      margin: 32px 0;
+    }
+    .contact-big a {
+      color: var(--green);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .contact-big a:hover { opacity: 0.7; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      padding: 32px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer span {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* Entry animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-name h1 { font-size: clamp(60px, 18vw, 100px); }
+      .hero-tagline { top: 90px; left: 24px; }
+      .hero-contact, .hero-bio, .hero-socials { display: none; }
+      section, .skills-section, .work-section, .contact-section { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .work-item { grid-template-columns: 60px 1fr; }
+      .work-tags { display: none; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Portfolio</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- SCROLL -->
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" style="padding:0; max-width:none;">
+    <div class="hero-light"></div>
+
+    <!-- Photo: replace src with your actual photo path -->
+    <div class="hero-photo">
+      <img src="images/download.png" alt="A.S. Vimal Raja"
+           onerror="this.style.opacity='0'" />
+    </div>
+
+    <div class="hero-tagline">
+       <h4><span>👋</span> Hey, I'm an AI Full Stack Developer</h4>
+    </div>
+
+    <div class="hero-name">
+      <h1>A.S. Vimal<br>Raja</h1>
+    </div>
+
+    <div class="hero-contact">
+      <a href="mailto:vimalraja8287@gmail.com">E vimalraja8287@gmail.com</a>
+      <a href="https://www.linkedin.com/in/vimal-raja-a7718a2b3" target="_blank">L linkedin.com/in/vimal-raja</a>
+    </div>
+
+    
+
+    <div class="hero-bio">
+    <h4><p>I build fast, scalable, and user-friendly web applications using modern JavaScript technologies. My main tools of choice are React on the frontend and Node.js on the backend.</p></h4>  
+    </div>
+
+    
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label"><h1>About:</h1></div>
+    <div class="about-grid">
+      <div class="fade-up">
+        <div class="about-heading">Crafting digital<br><em>experiences</em><br>with AI</div>
+      </div>
+      <div class="about-body fade-up">
+        <p>I'm A.S. Vimal Raja, an AI Full Stack Developer based in Chennai, India. I specialize in building intelligent web applications that combine modern UI with powerful AI capabilities.</p>
+        <p>With expertise in React, Node.js, Python, and various AI/ML frameworks, I create solutions that are not just functional — they're smart. From conversational AI to predictive analytics, I bring cutting-edge technology to real-world problems.</p>
+        <p>When I'm not coding, I'm exploring the latest in AI research, contributing to open source, and building side projects that push the boundaries of what's possible on the web.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <div class="skills-section" id="skills">
+    <div   class="section-label"><h1>Skills:</h1></div>
+    <div class="skills-grid">
+      <div class="skill-item fade-up">
+        <div class="skill-name">React</div>
+        <div class="skill-type">Frontend</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">Node.js</div>
+        <div class="skill-type">Backend</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">Python</div>
+        <div class="skill-type">AI / Scripting</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">TypeScript</div>
+        <div class="skill-type">Language</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">OpenAI API</div>
+        <div class="skill-type">AI Integration</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">MongoDB</div>
+        <div class="skill-type">Database</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">PostgreSQL</div>
+        <div class="skill-type">Database</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">Docker</div>
+        <div class="skill-type">DevOps</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">LangChain</div>
+        <div class="skill-type">AI Framework</div>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-name">Next.js</div>
+        <div class="skill-type">Framework</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <div class="work-section" id="work">
+    <div class="section-label"><h1>Work:</h1></div>
+    <div class="work-list">
+      <div class="work-item fade-up">
+        <span class="work-num">001</span>
+        <span class="work-title">AI Chat Platform</span>
+        <span class="work-tags">React<br>Node.js<br>OpenAI</span>
+      </div>
+      <div class="work-item fade-up">
+        <span class="work-num">002</span>
+        <span class="work-title">Smart Dashboard</span>
+        <span class="work-tags">Next.js<br>Python<br>ML</span>
+      </div>
+      <div class="work-item fade-up">
+        <span class="work-num">003</span>
+        <span class="work-title">E-Commerce AI</span>
+        <span class="work-tags">React<br>MongoDB<br>LangChain</span>
+      </div>
+      <div class="work-item fade-up">
+        <span class="work-num">004</span>
+        <span class="work-title">Portfolio Builder</span>
+        <span class="work-tags">TypeScript<br>PostgreSQL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <div class="section-label" style="text-align:center;"><h1>Contact:</h1></div>
+    <div class="contact-big fade-up">
+      <a href="mailto:vimalraja8287@gmail.com">Let's work<br>together.</a>
+    </div>
+    <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.15em;">vimalraja8287@gmail.com</p>
+  </div>
+
+  <footer>
+    <span>A.S. Vimal Raja — AI Full Stack Developer</span>
+    <span>©2025</span>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    (function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) *.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    })();
+
+    document.querySelectorAll('a').forEach(a => {
+      a.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+        ring.style.width = '60px'; ring.style.height = '60px';
+      });
+      a.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        ring.style.width = '36px'; ring.style.height = '36px';
+      });
+    });
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up').forEach((el, i) => {
+      el.style.transitionDelay = (i % 4) * 0.1 + 's';
+      obs.observe(el);
+    });
+
+    // Hero name entry animation
+    window.addEventListener('load', () => {
+      const name = document.querySelector('.hero-name h1');
+      name.style.opacity = '0';
+      name.style.transform = 'translateY(60px)';
+      name.style.transition = 'opacity 1.2s cubic-bezier(0.16,1,0.3,1), transform 1.2s cubic-bezier(0.16,1,0.3,1)';
+      setTimeout(() => {
+        name.style.opacity = '1';
+        name.style.transform = 'translateY(0)';
+      }, 300);
+
+      const tagline = document.querySelector('.hero-tagline');
+      tagline.style.opacity = '0';
+      tagline.style.transition = 'opacity 1s ease 0.6s';
+      setTimeout(() => tagline.style.opacity = '1', 600);
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
